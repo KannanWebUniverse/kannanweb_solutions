@@ -21,54 +21,27 @@ const HomePage=()=>{
       const data = await response.json();
       setter(data);
     } catch (error) {
-      if (error&&error.name === 'AbortError') {
+      if (error instanceof DOMException && error.name === 'AbortError') {
         console.log('Fetch aborted:', url);
       } else {
         console.error('Fetch error:', error);
       }
     }
   };
+  
+  const useFetchData = (url: string, setter: React.Dispatch<React.SetStateAction<any>>) => {
+    useEffect(() => {
+      const controller = new AbortController();
+      fetchData(url, setter, controller);
+      return () => controller.abort();
+    }, [url, setter]);
+  };
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const fetchTechnicalSkills = async () => {
-      await fetchData(`${process.env.SERVER}/api/technical_skills`, setTechnicalSkills, controller);
-    };
-    fetchTechnicalSkills();
 
-    return () => controller.abort();
-  }, []);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const fetchSoftSkills = async () => {
-      await fetchData(`${process.env.SERVER}/api/soft_skills`, setSoftSkills, controller);
-    };
-    fetchSoftSkills();
-
-    return () => controller.abort();
-  }, []);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const fetchExperience = async () => {
-      await fetchData(`${process.env.SERVER}/api/experience`, setExperience, controller);
-    };
-    fetchExperience();
-
-    return () => controller.abort();
-  }, []);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const fetchEducation = async () => {
-      await fetchData(`${process.env.SERVER}/api/education`, setEducation, controller);
-    };
-    fetchEducation();
-
-    return () => controller.abort();
-  }, []);
-
+  useFetchData(`/api/technical_skills`, setTechnicalSkills);
+  useFetchData(`/api/soft_skills`, setSoftSkills);
+  useFetchData(`/api/experience`, setExperience);
+  useFetchData(`/api/education`, setEducation);
     return(
         <>
 <main className="bg-gray-100 text-gray-800 min-h-screen p-6">

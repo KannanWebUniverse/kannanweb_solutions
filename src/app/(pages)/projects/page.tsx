@@ -4,32 +4,31 @@ import { useEffect, useState } from "react"
 
 const ProjectsPage=()=>{
 const [projects,setProjects]=useState<IFProjects>()
-  const fetchData = async (url: string, setter: React.Dispatch<React.SetStateAction<any>>, controller: AbortController) => {
-    try {
-      const response = await fetch(url, { signal: controller.signal });
-      if (!response.ok) {
-        throw new Error(`Error fetching data from ${url}: ${response.statusText}`);
-      }
-      const data = await response.json();
-      setter(data);
-    } catch (error) {
-      if (error&&error.name === 'AbortError') {
-        console.log('Fetch aborted:', url);
-      } else {
-        console.error('Fetch error:', error);
-      }
+const fetchData = async (url: string, setter: React.Dispatch<React.SetStateAction<any>>, controller: AbortController) => {
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) {
+      throw new Error(`Error fetching data from ${url}: ${response.statusText}`);
     }
-  };
+    const data = await response.json();
+    setter(data);
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      console.log('Fetch aborted:', url);
+    } else {
+      console.error('Fetch error:', error);
+    }
+  }
+};
 
+const useFetchData = (url: string, setter: React.Dispatch<React.SetStateAction<any>>) => {
   useEffect(() => {
     const controller = new AbortController();
-    const fetchProjects = async () => {
-      await fetchData(`${process.env.SERVER}/api/projects`, setProjects, controller);
-    };
-    fetchProjects();
-
+    fetchData(url, setter, controller);
     return () => controller.abort();
-  }, []);
+  }, [url, setter]);
+};
+useFetchData(`/api/projects`, setProjects);
   return (
     <>
       <section className="mt-10 px-4 lg:px-20">
