@@ -1,13 +1,16 @@
 'use client'
+import { IFEducations } from "@/app/interfaces/if_education";
+import { IFExperience } from "@/app/interfaces/if_experience";
+import { IFSoftSkills } from "@/app/interfaces/if_softskills";
+import { IFTecnicalSkills } from "@/app/interfaces/if_technicalskills";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { BiDownload } from "react-icons/bi";
 
 const HomePage=()=>{
-  const [TechnicalSkills, setTechnicalSkills] = useState({ data: [] });
-  const [SoftSkills, setSoftSkills] = useState({ data: [] });
-  const [Experience, setExperience] = useState({ data: [] });
-  const [Education, setEducation] = useState({ data: [] });
+  const [TechnicalSkills, setTechnicalSkills] = useState<IFTecnicalSkills>();
+  const [SoftSkills, setSoftSkills] = useState<IFSoftSkills>();
+  const [Experience, setExperience] = useState<IFExperience>();
+  const [Education, setEducation] = useState<IFEducations>();
 
   const fetchData = async (url: string, setter: React.Dispatch<React.SetStateAction<any>>, controller: AbortController) => {
     try {
@@ -17,8 +20,8 @@ const HomePage=()=>{
       }
       const data = await response.json();
       setter(data);
-    } catch (error:any) {
-      if (error.name === 'AbortError') {
+    } catch (error) {
+      if (error&&error.name === 'AbortError') {
         console.log('Fetch aborted:', url);
       } else {
         console.error('Fetch error:', error);
@@ -79,11 +82,11 @@ const HomePage=()=>{
       <section className="mt-10">
         <h1 className="text-3xl font-semibold text-center mb-6">Technical Skills</h1>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {TechnicalSkills.data.map((skill: any) => (
+          {TechnicalSkills?.data.map((skill) => (
             <li key={skill.type} className="bg-white p-6 rounded-lg shadow-md">
               <h2 className="text-xl font-semibold text-indigo-600 mb-2">{skill.type}</h2>
               <div className="text-gray-700 p-2 flex-row justify-between">
-                {skill.list.map((item: any) => (
+                {skill.list.map((item) => (
                   <sub key={item} className="block mb-1 p-4">
                     {item}
                   </sub>
@@ -96,7 +99,7 @@ const HomePage=()=>{
 
       <section className="mt-10">
         <h1 className="text-3xl font-semibold text-center mb-6">Experience</h1>
-        {Experience.data.map((exp: any) => (
+        {Experience?.data.map((exp) => (
           <div key={exp.company} className="bg-white p-6 rounded-lg shadow-md mb-6">
             <h2 className="text-xl font-bold text-indigo-600">{exp.company}</h2>
             <h3 className="text-gray-700">Role: {exp.role}</h3>
@@ -105,7 +108,7 @@ const HomePage=()=>{
             </p>
             <h4 className="text-lg font-semibold mt-4">Responsibilities:</h4>
             <ul className="list-disc ml-5 text-gray-700">
-              {exp.responsibilities.map((res: any) => (
+              {exp.responsibilities.map((res) => (
                 <li key={res}>{res}</li>
               ))}
             </ul>
@@ -115,7 +118,7 @@ const HomePage=()=>{
 
       <section className="mt-10">
         <h1 className="text-3xl font-semibold text-center mb-6">Education</h1>
-        {Education.data.map((edu: any) => (
+        {Education?.data.map((edu) => (
           <div key={edu.degree} className="bg-white p-6 rounded-lg shadow-md mb-6">
             <h2 className="text-xl font-bold text-indigo-600">{edu.degree}</h2>
             <h3 className="text-gray-700">College: {edu.college}</h3>
@@ -142,7 +145,7 @@ const HomePage=()=>{
       <section className="mt-10">
         <h1 className="text-3xl font-semibold text-center mb-6">Soft Skills</h1>
         <ul className="flex flex-wrap justify-center gap-4">
-          {SoftSkills.data.map((skill: any) => (
+          {SoftSkills?.data.map((skill) => (
             <li
               key={skill}
               className="bg-indigo-500 text-white px-4 py-2 rounded-full shadow-lg text-sm font-medium"

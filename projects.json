@@ -1,9 +1,27 @@
 {
     "data":[
         {
-            "name":"",
-            "description":"",
-            "technologies_used":"",
+            "name":"HRMS (Human Resource Management System) ",
+            "description":"Human Resource Management System (HRMS) manages global employee data and retrieves it instantly without any hassle. It is governed by strong security practices to keep information secure. It tracks employees' leave and time at work with ease and acts as single source for all employee attendance details.",
+            "technologies_used":[
+                "Angular",".NET","MSSQL SERVER","AWS (lightsail)"
+            ],
+            "extra":""
+        },
+        {
+            "name":"Inventory Management System",
+            "description":"Inventory Management System (IMS) tracks goods through the entire supply chain from production to retail, warehousing to shipping. IMS enables the businesses to make better decisions and investments by allowing them to view all the moving parts of its operations. IMS integrates the Sales, Production, Purchase and Quality modules.",
+            "technologies_used":[
+                "Angular",".NET","MSSQL SERVER","AWS (lightsail)"
+            ],
+            "extra":""
+        },
+        {
+            "name":"Talyi",
+            "description":"Talyi is a pre-employment platform that helps hiring managers like you streamline the recruiting process. Write job postings, track applications, and assess candidates using built-in AI tools.",
+            "technologies_used":[
+                "Next.js","Postgresql","Go (Golang)","AWS","OPENAI"
+            ],
             "extra":""
         }
     ]
