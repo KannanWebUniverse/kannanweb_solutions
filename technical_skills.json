@@ -1,0 +1,24 @@
+{
+    "data":[
+        {
+            "type":"Frontend",
+            "list":["HTML5","CSS3","Angular (v6,v8,v14)","Tailwind CSS","Next.js"]
+        },
+        {
+            "type":"Backend",
+            "list":[".NET", "Django", "Go"]
+        },
+        {
+            "type":"Databases",
+            "list":["MSSQL Server","PostgreSQL"]
+        },
+        {
+            "type":"DevOps & Cloud",
+            "list":["AWS S3","AWS EC2","AWS EKS","CI/CD pipeline","Docker"]
+        },
+        {
+           "type":"Version control",
+            "list":["Github"]
+        }
+    ]
+}
