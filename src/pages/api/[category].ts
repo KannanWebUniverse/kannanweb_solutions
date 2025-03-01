@@ -12,6 +12,7 @@ const filePaths: FilePaths = {
   experience: 'experience.json',
   education: 'education.json',
   projects: 'projects.json',
+  achievements:'achievements.json'
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

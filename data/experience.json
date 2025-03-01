@@ -4,13 +4,13 @@
         "company": "MENTHEE TECHNOLOGIES PRIVATE LIMITED",
         "from": "April 2022",
         "to": "Present",
-        "role": "Full Stack Web Developer",
+        "role": "Full-Stack Developer",
         "responsibilities": [
-          "Designed and implemented new features to an existing applications",
+          "Architected and deployed scalable applications.",
           "Analyzed user requirements and translated business needs into technical specifications.",
           "Developed clean, maintainable, and efficient code.",
           "Provided ongoing support and resolved production issues.",
-          "Deployed our applications"
+          "Maintained code quality through comprehensive unit testing "
         ]
       }
     ]

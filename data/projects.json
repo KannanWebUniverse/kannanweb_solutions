@@ -1,28 +1,55 @@
 {
     "data":[
         {
-            "name":"HRMS (Human Resource Management System) ",
-            "description":"Human Resource Management System (HRMS) manages global employee data and retrieves it instantly without any hassle. It is governed by strong security practices to keep information secure. It tracks employees' leave and time at work with ease and acts as single source for all employee attendance details.",
-            "technologies_used":[
-                "Angular",".NET","MSSQL SERVER","AWS (lightsail)"
-            ],
-            "extra":""
-        },
-        {
-            "name":"Inventory Management System",
-            "description":"Inventory Management System (IMS) tracks goods through the entire supply chain from production to retail, warehousing to shipping. IMS enables the businesses to make better decisions and investments by allowing them to view all the moving parts of its operations. IMS integrates the Sales, Production, Purchase and Quality modules.",
-            "technologies_used":[
-                "Angular",".NET","MSSQL SERVER","AWS (lightsail)"
-            ],
-            "extra":""
-        },
-        {
             "name":"Talyi",
             "description":"Talyi is a pre-employment platform that helps hiring managers like you streamline the recruiting process. Write job postings, track applications, and assess candidates using built-in AI tools.",
+            "responsibilities":[
+                "Developed full-stack application using Next.js and Golang",
+                "Implemented AWS Kubernetes deployment",
+                "Integrated OpenAI for automated interviews",
+                "Managed PostgreSQL database operations"
+                ],
             "technologies_used":[
                 "Next.js","Postgresql","Go (Golang)","AWS","OPENAI"
             ],
             "extra":""
+        },
+        {
+            "name":"HRMS (Human Resource Management System) ",
+            "description":"Human Resource Management System (HRMS) manages global employee data and retrieves it instantly without any hassle. It is governed by strong security practices to keep information secure. It tracks employees' leave and time at work with ease and acts as single source for all employee attendance details.",
+            "responsibilities":[
+            "Implemented new features and optimized performance",
+            "Managed full-stack development and maintenance "
+            ],
+            "technologies_used":[
+                "Angular,.NET Web API, MS SQL Server"
+            ],
+            "extra":""
+        },
+        {
+            "name":"EPP (Inventory Management System)",
+            "description":"Inventory Management System (IMS) tracks goods through the entire supply chain from production to retail, warehousing to shipping. IMS enables the businesses to make better decisions and investments by allowing them to view all the moving parts of its operations. IMS integrates the Sales, Production, Purchase and Quality modules.",
+            "responsibilities":[
+                "Developed integrated sales and inventory tracking modules ",
+                "Managed full-stack development and maintenance "
+                ],
+            "technologies_used":[
+                "Angular",".NET","MSSQL SERVER","AWS (lightsail)"
+            ],
+            "extra":""
+        },
+        {
+            "name":"CFL",
+            "description":"Cricket Contest.",
+            "responsibilities":[
+                "Developed backend infrastructure using Django ",
+                "Optimized PostgreSQL database performance"
+                ],
+            "technologies_used":[
+                "Django", "PostgreSQL" 
+            ],
+            "extra":""
         }
+        
     ]
 }
