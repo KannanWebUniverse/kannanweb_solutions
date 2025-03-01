@@ -1,0 +1,12 @@
+{
+    "build": {
+      "env": {
+        "PKG_CONFIG_PATH": "/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
+      },
+      "commands": [
+        "apt-get update && apt-get install -y libpixman-1-dev",
+        "npm install"
+      ]
+    }
+  }
+  
