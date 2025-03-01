@@ -9,14 +9,11 @@ const nextConfig: NextConfig = {
   eslint:{
     ignoreDuringBuilds:true
   },
-  webpack: (config,{ isServer }) => {
+  webpack: (config) => {
     config.module.rules.push({
       test: /\.node$/,
       use: 'node-loader',
     });
-    if (isServer) {
-      config.externals.push("canvas");
-    }
     return config;
   },
   /* config options here */
