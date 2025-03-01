@@ -31,7 +31,7 @@ export default function PagesLayout({ children }: { children: React.ReactNode })
   <div className="flex flex-wrap gap-4 justify-center sm:justify-end items-center">
     <NavButton href="/home" label="Home" />
     <NavButton href="/projects" label="View Projects" />
-    <NavButton href="/resume" label="View Resume" />
+    {/* <NavButton href="/resume" label="View Resume" /> */}
 
     <div className="relative group">
       <button
