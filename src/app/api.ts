@@ -1,4 +1,4 @@
-const baseUrl = `https://docs.google.com/spreadsheets/d/e/2PACX-1vS48SZRoMO5KhNtkp6JHOEN31COplNor0RFp8EqoQNitVhFjF63_RHATq7BfhuG1lNcI4wV8cfEfLFp/pub?output=csv&`;
+const baseUrl = process.env.NEXT_PUBLIC_DOCSHEET
 
 export const fetchCSV = async (gid: string) => {
     const url = `${baseUrl}gid=${gid}`;
