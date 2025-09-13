@@ -1,49 +1,165 @@
 'use client'
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BiDownload } from "react-icons/bi";
-
+import { fetchCSV } from "../api";
+import useStore from "../zustand/store";
+type Sheets = {
+  Skills: string;
+  SoftSkills: string;
+  Education: string;
+  Experience: string;
+  Projects: string;
+  Achievements: string;
+  PersonalInfo: string;
+}
 export default function PagesLayout({ children }: { children: React.ReactNode }) {
+  const { setTechnicalSkills, setSoftSkills, setEducation, setExperiences,
+     setAchievements, setProjects, setPersonalInfo,PersonalInfo } = useStore()
+  const [sheets, setSheets] = useState<Sheets>()
+  useEffect(() => {
+    loadSheets()
+  }, [])
+  useEffect(() => {
+    if (!sheets) return
+    loadData()
+  }, [sheets])
 
-  const DownloadResume = () => {
-    const resume = process.env.NEXT_PUBLIC_RESUME_PATH;
+  const loadSheets = async () => {
+
+    const sheets: any[] = await fetchCSV('0');
+    console.log(sheets);
+    if (sheets && sheets.length > 0) {
+      setSheets(sheets[0])
+    }
+  }
+  const loadData = async () => {
+    if (!sheets) return
+    try {
+         fetchCSV(sheets.PersonalInfo).then(res=>{
+      if (res && res.length > 0) {
+        setPersonalInfo(res[0])
+      }
+            })
+
+      fetchCSV(sheets.Skills).then((res:any)=>{
+      console.log(res);
+
+      // Group by Type
+      const grouped: { [key: string]: string[] } = {};
+
+      res.forEach(item => {
+        const type = item.Type;
+        const skill = item.Skill;
+
+        if (!grouped[type]) {
+          grouped[type] = [];
+        }
+        grouped[type].push(skill);
+      });
+
+      // Convert grouped object to array of TechnicalSkills
+      const technicalSkills: any[] = Object.keys(grouped).map(type => ({
+        Type: type,
+        List: grouped[type]
+      }));
+
+      console.log(technicalSkills);
+
+      // Set to Zustand store
+      setTechnicalSkills(technicalSkills);
+
+      });
+
+      fetchCSV(sheets.SoftSkills).then(res=>{
+      console.log(res)
+      setSoftSkills(res)
+      })
+
+      fetchCSV(sheets.Education).then((res:any)=>{
+      console.log(res)
+      setEducation(res)
+      })
+
+  fetchCSV(sheets.Experience).then((res:any)=>{
+      console.log(res);
+
+      const formattedExperiences = res.map(item => ({
+        ...item,
+        Responsibilities: item.Responsibilities ? item.Responsibilities.split(';').map(r => r.trim()) : []
+      }));
+      console.log(formattedExperiences);
+      setExperiences(formattedExperiences);
+  })
+
+
+      fetchCSV(sheets.Projects).then((res:any)=>{
+ console.log(res);
+
+      const formattedProjects = res.map(item => ({
+        ...item,
+        TechnologiesUsed: item.TechnologiesUsed ? item.TechnologiesUsed.split(';').map(t => t.trim()) : [],
+        Responsibilities: item.Responsibilities ? item.Responsibilities.split(';').map(r => r.trim()) : []
+      }));
+
+      console.log(formattedProjects);
+      setProjects(formattedProjects);
+      })
+     
+
+      fetchCSV(sheets.Achievements).then((res:any)=>{
+    console.log(res)
+      setAchievements(res)
+      })
   
+
+
+
+
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const DownloadResume = () => {
+    const resume = PersonalInfo?.Resume;
+
     if (!resume) {
       alert("Resume is currently unavailable. Please try again later.");
       return;
     }
-  
+
     try {
       window.open(resume, '_blank', 'noopener,noreferrer');
     } catch (error) {
       console.error("Failed to open resume:", error);
     }
   };
-  
+
 
   return (
     <main className="grid min-h-screen">
-<nav className="top-0 w-full p-6 bg-gradient-to-r from-amber-500 to-yellow-400 shadow-md flex flex-col sm:flex-row justify-between items-center">
-  <div className="text-white text-center sm:text-left mb-4 sm:mb-0">
-    <h1 className="text-2xl font-bold">Hi, I&apos;m Kannan, a Full Stack Developer.</h1>
-  </div>
+      <nav className="top-0 w-full p-6 bg-blue-100 shadow-md flex flex-col sm:flex-row justify-between items-center">
+        <div className="text-white text-center sm:text-left mb-4 sm:mb-0">
+          {PersonalInfo?.Name&&(<h1 className="text-2xl font-bold">Hi, I&apos;m {PersonalInfo?.Name}, a {PersonalInfo?.Designation}.</h1>)}
+          
+        </div>
 
-  <div className="flex flex-wrap gap-4 justify-center sm:justify-end items-center">
-    <NavButton href="/home" label="Home" />
-    <NavButton href="/projects" label="View Projects" />
-    {/* <NavButton href="/resume" label="View Resume" /> */}
+        <div className="flex flex-wrap gap-4 justify-center sm:justify-end items-center">
+          <NavButton href="/home" label="Home" />
+          <NavButton href="/projects" label="View Projects" />
+          {/* <NavButton href="/resume" label="View Resume" /> */}
 
-    <div className="relative group">
-      <button
-        onClick={DownloadResume}
-        className="p-2 bg-cyan-600 hover:bg-cyan-700 rounded-full text-white shadow-md transition duration-300"
-      >
-        <BiDownload className="text-xl" />
-      </button>
-      <Tooltip text="Download resume" />
-    </div>
-  </div>
-</nav>
+          <div className="relative group">
+            <button
+              onClick={DownloadResume}
+              className="p-2 bg-lime-950 hover:bg-cyan-700 rounded-full text-white shadow-md transition duration-300"
+            >
+              <BiDownload className="text-xl" />
+            </button>
+            <Tooltip text="Download resume" />
+          </div>
+        </div>
+      </nav>
 
       {children}
 
@@ -52,15 +168,24 @@ export default function PagesLayout({ children }: { children: React.ReactNode })
         <p className="text-gray-700 text-lg mb-4">Feel free to reach out for collaborations or just a chat!</p>
 
         <div className="flex flex-col items-center gap-4">
-          <a href="mailto:kannansamy9344@gmail.com" className="text-lg text-blue-500 hover:underline">
-            📧 kannansamy9344@gmail.com
+          {
+            PersonalInfo?.Email&&(
+          <a href={`mailto:${PersonalInfo?.Email}`} className="text-lg text-blue-500 hover:underline">
+            📧 {PersonalInfo?.Email}
           </a>
-          <a href="tel:+9344867199" className="text-lg text-blue-500 hover:underline">
-            📞 +91 9344867199
-          </a>
+            )
+          }
+          {
+            PersonalInfo?.Mobile&&
+  (<a href={`tel:+${PersonalInfo?.Mobile}`} className="text-lg text-blue-500 hover:underline">
+            📞 +91 {PersonalInfo?.Mobile}
+          </a>)
+          }
+
+        
           <div className="flex gap-4 mt-2">
-            <SocialLink href="https://github.com/KannanWebUniverse" label="GitHub" />
-            <SocialLink href="https://www.linkedin.com/in/kannan-a-597386233" label="LinkedIn" />
+           {PersonalInfo?.Github&& (<SocialLink href={PersonalInfo?.Github!} label="GitHub" />)}
+            {PersonalInfo?.LinkedIn&&(<SocialLink href={PersonalInfo?.LinkedIn!} label="LinkedIn" />)}
           </div>
         </div>
       </footer>
@@ -71,7 +196,7 @@ export default function PagesLayout({ children }: { children: React.ReactNode })
 const NavButton = ({ href, label }: { href: string; label: string }) => (
   <div className="relative group">
     <Link href={href}>
-      <button className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg shadow-md transition duration-300">
+      <button className="px-4 py-2 bg-lime-950 hover:bg-cyan-700 text-white rounded-lg shadow-md transition duration-300">
         {label}
       </button>
     </Link>

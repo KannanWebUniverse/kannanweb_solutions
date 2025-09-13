@@ -11,6 +11,8 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "blue-100": "oklch(62.3% .214 259.815)",
+        "lime-950":"oklch(27.4% .072 132.109)"
       },
     },
   },
