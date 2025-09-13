@@ -1,6 +1,7 @@
-const baseUrl = process.env.NEXT_PUBLIC_DOCSHEET
+
 
 export const fetchCSV = async (gid: string) => {
+    const baseUrl = process.env.NEXT_PUBLIC_DOCSHEET
     const url = `${baseUrl}gid=${gid}`;
     const res = await fetch(url);
     if (!res.ok) {
